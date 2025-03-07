@@ -52,8 +52,9 @@ function Loading() {
     setErrors({});
 
     const originalData = JSON.parse(localStorage.getItem("csvData")) || [];
-    const selectedColumnNames = Object.keys(selectedColumns).filter((col) => selectedColumns[col]);
-
+    const selectedColumnNames = Object.keys(selectedColumns)
+      .filter((col) => selectedColumns[col] && col !== selectedName && col !== selectedFirstName && col !== selectedLastName);
+      
     const filteredData = originalData.map((row) => {
       const newRow = {
         idName: isChecked
@@ -91,17 +92,15 @@ function Loading() {
 
           <div>
             <p className="text-2xl font-medium">Name</p>
-            <div className="flex items-center">
+            <label className="text-base flex items-center cursor-pointer">
               <input
                 type="checkbox"
                 checked={isChecked}
                 onChange={handleCheckboxChange}
-                className="w-6 h-6 border-2 border-secondary rounded-lg"
+                className="w-6 h-6 cursor-pointer"
               />
-              <label className="text-base">
-                separate columns <span className="text-sm">(first name & last name)</span>
-              </label>
-            </div>
+              <span>separate columns <span className="text-sm">(first & last name)</span></span>
+            </label>
 
             {!isChecked ? (
               <div className="relative">
@@ -121,8 +120,8 @@ function Loading() {
               </div>
             ) : (
               [
-                ["First Name", selectedFirstName, setSelectedFirstName, "selectedFirstName"],
-                ["Last Name", selectedLastName, setSelectedLastName, "selectedLastName"],
+                ["first name", selectedFirstName, setSelectedFirstName, "selectedFirstName"],
+                ["last name", selectedLastName, setSelectedLastName, "selectedLastName"],
               ].map(([label, value, setter, errorKey]) => (
                 <div key={label} className="relative">
                   <label className="text-sm">{label}</label>
