@@ -14,7 +14,7 @@ function Home() {
       <p className="text-lg font-medium text-center">Your simple<br/>attendance tracker.</p>
       <Link
           to="/load"
-          className="fixed bottom-0 w-full text-center bg-primary text-text py-5 text-2xl font-semibold border-t-2 border-secondary hover:bg-primary/80 cursor-pointer"
+          className="fixed bottom-5 min-w-1/2 md:min-w-1/5 text-center bg-primary text-text py-5 text-2xl rounded-xl font-semibold hover:bg-secondary cursor-pointer"
       >
           Try it
       </Link>

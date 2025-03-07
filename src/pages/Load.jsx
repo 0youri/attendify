@@ -53,8 +53,8 @@ function Load() {
 
 
   return (
-    <div className="min-h-dvh flex flex-col justify-center text-text gap-1">
-      <div className="px-14 space-y-1">
+    <div className="min-h-dvh flex flex-col justify-center md:items-center text-text gap-1">
+      <div className="px-14 md:px-0 space-y-1">
         <p className="text-3xl font-semibold text-left">
           Fill your<br/>
           <span className="italic">Google Sheets</span> link<br/>
@@ -67,16 +67,28 @@ function Load() {
           placeholder="https://docs.google.com/..." 
           className={`w-full border-2 rounded-lg py-2 px-4 text-2xl text-text ${error ? "border-red-400" : "border-secondary"}`}
         />
+        
         {error && <p className="text-red-400 font-medium">{error}</p>}
+        <a
+          href="https://support.google.com/docs/answer/183965"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-text hover:underline font-medium flex items-center gap-1 mt-2"
+        >
+          <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+          <span>How to publish Google Sheets as CSV</span>
+        </a>
       </div>
-      <button
-        onClick={handleSubmit}
-        disabled={isChecking}
-        className={`fixed bottom-0 w-full text-center py-5 text-2xl font-semibold border-t-2 border-secondary cursor-pointer 
-          ${isChecking ? "bg-gray-500 cursor-not-allowed" : "bg-primary hover:bg-primary/80 text-text"}`}
-      >
-        {isChecking ? "Checking..." : "Submit"}
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={handleSubmit}
+          disabled={isChecking}
+          className={`fixed bottom-5 min-w-1/2 md:min-w-1/5 text-center text-text py-5 text-2xl rounded-xl font-semibold cursor-pointer 
+            ${isChecking ? "bg-gray-500 cursor-not-allowed" : "bg-primary hover:bg-secondary"}`}
+        >
+          {isChecking ? "Checking..." : "Submit"}
+        </button>
+      </div>
     </div>
   );
 }
