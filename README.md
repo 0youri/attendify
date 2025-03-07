@@ -26,7 +26,7 @@
 
 ### 1️⃣ Clone the repository  
 ```bash
-git clone https://github.com/yourusername/attendify.git
+git clone https://github.com/0youri/attendify.git
 cd attendify
 ```
 
