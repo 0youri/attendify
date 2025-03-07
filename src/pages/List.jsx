@@ -1,0 +1,118 @@
+import { useState, useEffect, useMemo } from "react";
+
+function List() {
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    // Load data from localStorage on mount and sort it
+    useEffect(() => {
+        const storedData = JSON.parse(localStorage.getItem("filteredCsvData")) || [];
+        setFilteredData(sortData(storedData));
+    }, []);
+
+    // Sorting function
+    const sortData = (data) => 
+        [...data].sort((a, b) =>
+            (Number(a.checkList) - Number(b.checkList)) || 
+            new Intl.Collator(undefined, { numeric: true, sensitivity: "base" }).compare(a.idName || "", b.idName || "")
+        );
+
+    // Open modal
+    const openModal = (item) => setSelectedItem(item);
+
+    // Close modal
+    const closeModal = () => setSelectedItem(null);
+
+    // Toggle checkList status
+    const toggleCheck = () => {
+        if (!selectedItem) return;
+
+        const updatedData = filteredData.map((row) =>
+            row === selectedItem ? { ...row, checkList: !row.checkList } : row
+        );
+        const sortedData = sortData(updatedData);
+
+        setFilteredData(sortedData);
+        localStorage.setItem("filteredCsvData", JSON.stringify(sortedData));
+        closeModal();
+    };
+
+    // Filter data based on search query
+    const filteredList = useMemo(() =>
+        filteredData.filter((row) => row.idName?.toLowerCase().includes(searchQuery.toLowerCase())),
+        [filteredData, searchQuery]
+    );
+
+    return (
+        <div className="min-h-dvh flex flex-col justify-start text-text gap-1 py-24 px-14">
+            <h1 className="text-2xl font-semibold text-left">List</h1>
+
+            {/* Search Bar */}
+            <input
+                type="text"
+                placeholder="search bar"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full border-2 rounded-lg py-2 px-4 text-xl text-text border-secondary"
+            />
+
+            {/* Data List */}
+            <div className="text-left py-5 space-y-5">
+                {filteredList.map((row, index) => (
+                    <div
+                        key={index}
+                        className={`flex items-center rounded-lg px-5 py-3 cursor-pointer 
+                            ${row.checkList ? "bg-primary-green hover:bg-primary-green/75" : "bg-primary/50 hover:bg-primary"}`}
+                        onClick={() => openModal(row)}
+                    >
+                        <div className="flex flex-col w-4/5">
+                            <span className="text-sm">name</span>
+                            <span className="text-lg truncate font-bold">{row.idName || "Unnamed"}</span>
+                        </div>
+                        <div className="w-1/5 flex justify-center cursor-pointer">
+                            <svg width="22" height="8" viewBox="0 0 22 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.37 7.25C16.67 6.61 16.96 6.05 17.24 5.57C17.54 5.09 17.83 4.69 18.11 4.37H0.62V3.11H18.11C17.83 2.77 17.54 2.36 17.24 1.88C16.96 1.4 16.67 0.849999 16.37 0.229999H17.42C18.68 1.69 20 2.77 21.38 3.47V4.01C20 4.69 18.68 5.77 17.42 7.25H16.37Z" fill="#9AA6B2"/>
+                            </svg>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Modal */}
+            {selectedItem && (
+                <div className="fixed inset-0 bg-black/50 z-10 flex items-center justify-center">
+                    <div className="bg-background rounded-xl shadow-lg w-80">
+                        <div className="px-7 pt-6 pb-3 space-y-1">
+                            {Object.entries(selectedItem)
+                                .filter(([key]) => key !== "checkList")
+                                .map(([key, value]) => (
+                                    <div key={key} className="flex flex-col">
+                                        <span className="text-md">{key === "idName" ? "name" : key}</span>
+                                        <span className="text-2xl truncate font-bold">{value || "N/A"}</span>
+                                    </div>
+                                ))}
+                        </div>
+
+                        <div className="flex border-t-2 border-secondary">
+                            <button
+                                className="w-full bg-primary text-text text-xl border-r border-secondary font-bold py-4 rounded-bl-xl hover:bg-primary/80 cursor-pointer"
+                                onClick={closeModal}
+                            >
+                                Close
+                            </button>
+                            <button
+                                className="w-full text-text text-xl border-l border-secondary rounded-br-xl font-bold py-4 cursor-pointer bg-primary hover:bg-primary/80"
+                                onClick={toggleCheck}
+                            >
+                                {selectedItem.checkList ? "Uncheck" : "Check"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default List;
