@@ -73,19 +73,21 @@ function Preload() {
                 <p className="text-sm font-medium opacity-50">Only the first 5 rows have been loaded</p>
                 <p className="text-2xl font-medium italic">Has the data been loaded correctly?</p>
             </div>
-            <div className="fixed bottom-0 w-full grid grid-cols-2 divide-x-2 divide-secondary">
-                <Link
-                    to="/loading"
-                    className="text-center bg-primary text-text py-5 text-2xl font-semibold border-t-2 border-secondary hover:bg-primary/80 cursor-pointer"
-                >
-                    Return
-                </Link>
-                <Link
-                    to="/list"
-                    className="text-center bg-primary text-text py-5 text-2xl font-semibold border-t-2 border-secondary hover:bg-primary/80 cursor-pointer"
-                >
-                    Continue
-                </Link>
+            <div className="flex justify-center">
+                <div className="fixed bottom-5 w-5/6 md:1/6 grid grid-cols-2 gap-5">
+                    <Link
+                        to="/loading"
+                        className="text-center bg-primary text-text py-5 text-2xl rounded-xl font-semibold hover:bg-secondary cursor-pointer"
+                    >
+                        Return
+                    </Link>
+                    <Link
+                        to="/list"
+                        className="text-center bg-primary text-text py-5 text-2xl rounded-xl font-semibold hover:bg-secondary cursor-pointer"
+                    >
+                        Continue
+                    </Link>
+                </div>
             </div>
         </div>
     );

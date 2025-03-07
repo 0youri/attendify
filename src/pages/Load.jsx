@@ -53,8 +53,8 @@ function Load() {
 
 
   return (
-    <div className="min-h-dvh flex flex-col justify-center text-text gap-1">
-      <div className="px-14 space-y-1">
+    <div className="min-h-dvh flex flex-col justify-center md:items-center text-text gap-1">
+      <div className="px-14 md:px-0 space-y-1">
         <p className="text-3xl font-semibold text-left">
           Fill your<br/>
           <span className="italic">Google Sheets</span> link<br/>
@@ -79,14 +79,16 @@ function Load() {
           <span>How to publish Google Sheets as CSV</span>
         </a>
       </div>
-      <button
-        onClick={handleSubmit}
-        disabled={isChecking}
-        className={`fixed bottom-0 w-full text-center py-5 text-2xl font-semibold border-t-2 border-secondary cursor-pointer 
-          ${isChecking ? "bg-gray-500 cursor-not-allowed" : "bg-primary hover:bg-primary/80 text-text"}`}
-      >
-        {isChecking ? "Checking..." : "Submit"}
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={handleSubmit}
+          disabled={isChecking}
+          className={`fixed bottom-5 min-w-1/2 md:min-w-1/5 text-center text-text py-5 text-2xl rounded-xl font-semibold cursor-pointer 
+            ${isChecking ? "bg-gray-500 cursor-not-allowed" : "bg-primary hover:bg-secondary"}`}
+        >
+          {isChecking ? "Checking..." : "Submit"}
+        </button>
+      </div>
     </div>
   );
 }

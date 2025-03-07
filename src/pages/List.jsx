@@ -136,12 +136,14 @@ function List() {
             </div>
         )}
       </div>
-      <button
-        className="fixed bottom-0 w-full text-center bg-primary text-text py-4 text-2xl font-semibold border-t-2 border-secondary hover:bg-secondary cursor-pointer"
-        onClick={() => setShowConfirmModal(true)}
-      >
-        Done
-      </button>
+      <div className="flex justify-center">
+        <button
+          className="fixed bottom-5 min-w-1/2 md:w-1/6 text-center bg-primary text-text py-5 text-2xl rounded-lg font-semibold hover:bg-secondary cursor-pointer"
+          onClick={() => setShowConfirmModal(true)}
+        >
+          Done
+        </button>
+      </div>
       {showConfirmModal && (
         <div className="fixed inset-0 bg-black/50 z-20 flex items-center justify-center">
             <div className="bg-background rounded-xl shadow-lg w-80 p-6 space-y-5">
